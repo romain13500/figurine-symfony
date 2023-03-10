@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Page de {{ figurine.name }}
+{% endblock %}
+
+{% block body %}
+
+    <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{path('homepage')}}">Accueil</a></li>
+    <li class="breadcrumb-item"><a href="{{path('figurine_category', {'slug': figurine.category.slug})}}">{{figurine.category.categoryName}}</a></li>
+    <li class="breadcrumb-item active">{{figurine.name}}</li>
+    </ol>
+    <h1 class="text-center">{{ figurine.name }}</h1> 
+    
+    <div class="row">
+        <div class="col-4">
+            <img class="img-fluid" src="{{figurine.picture}}" alt="img">
+        </div>
+        <div class="col">
+        <span class="badge rounded-pill bg-info">
+                {{figurine.category.categoryName}}
+            </span>
+            <p>{{figurine.shortDescription}}</p>
+            <a href="#" class="btn btn-success"><i class="fas fa-shopping-cart"></i>
+                Ajouer au panier
+            </a>
+        </div>
+    </div>
+{% endblock %}

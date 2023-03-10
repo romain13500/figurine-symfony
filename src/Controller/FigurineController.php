@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\CategoryRepository;
+use App\Repository\FigurinesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -24,6 +25,21 @@ class FigurineController extends AbstractController
         return $this->render('figurine/category.html.twig', [
             'slug' => $slug,
             'category' => $category
+        ]);
+    }
+
+    
+    #[Route('/{category_slug}/{slug}', name:'figurine_show')] 
+    public function show($slug, FigurinesRepository $figurinesRepository)
+    {
+        $figurine = $figurinesRepository->findOneBy(['slug' => $slug]);
+
+        if (!$figurine) {
+                throw new NotFoundHttpException("Le produit n'existe pas !!!");
+        }
+
+        return $this->render('figurine/show.html.twig', [
+            'figurine' => $figurine
         ]);
     }
 }
