@@ -9,7 +9,11 @@
             <p class="card-text">
             {{figurine.shortDescription}}
             </p>
-            <a href="#" class="btn btn-info">Détail</a>
+            <a href="{{ path('figurine_show', {
+                    'category_slug': figurine.category.slug, 
+                    'slug': figurine.slug
+                }) 
+            }}" class="btn btn-info">Détail</a>
             <a href="#" class="btn btn-success">Acheter</a>
         </div>
     </div>
