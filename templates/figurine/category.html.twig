@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Catégorie : {{ slug }}
+{% endblock %}
+
+{% block body %}
+    <h1>
+        Catégorie : {{category.categoryName}}
+
+        <div class="container">
+            <div class="row">
+                {% for f in category.figurines %}
+                
+                    {% include "figurine/_figurine_card.html.twig" %}
+    
+                {% endfor %}
+            </div>
+        </div>
+
+        
+    </h1>
+{% endblock %}
