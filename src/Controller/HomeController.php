@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\FigurinesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
@@ -11,10 +11,10 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="homepage")
      */
-    public function index()
+    public function homepage(FigurinesRepository $figurinesRepository)
     {
-        return $this->render('home/homepage.html.twig', [
-            'controller_name' => 'HomeController',
-        ]);
+        $figurines = $figurinesRepository->findAll();
+        dump($figurines);
+        return $this->render('home/homepage.html.twig');
     }
 }
