@@ -13,8 +13,9 @@ class HomeController extends AbstractController
      */
     public function homepage(FigurinesRepository $figurinesRepository)
     {
-        $figurines = $figurinesRepository->findAll();
-        dump($figurines);
-        return $this->render('home/homepage.html.twig');
+        $figurines = $figurinesRepository->findBy([], [], 3);
+        return $this->render('home/homepage.html.twig', [
+            'figurines' => $figurines
+        ]);
     }
 }
