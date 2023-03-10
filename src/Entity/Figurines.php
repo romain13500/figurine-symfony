@@ -23,7 +23,7 @@ class Figurines
     private ?int $price = null;
 
     #[ORM\ManyToOne(inversedBy: 'figurines')]
-    private ?Category $category = null;
+    private ?Category $category;
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
