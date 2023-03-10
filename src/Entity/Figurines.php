@@ -25,6 +25,9 @@ class Figurines
     #[ORM\ManyToOne(inversedBy: 'figurines')]
     private ?Category $category = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +77,18 @@ class Figurines
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
