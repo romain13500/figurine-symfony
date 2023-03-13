@@ -14,11 +14,14 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Catégories</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#"> Dragon Ball</a>
-                    <a class="dropdown-item" href="#"> One Piece</a>
+                    {% for c in categoryRepository.findAll() %}
+                       <a class="dropdown-item" href="{{ path('figurine_category', {'slug': c.slug})}}"> {{c.categoryName}}</a> 
+                    {% endfor %}
+                    
+                    {# <a class="dropdown-item" href="#"> One Piece</a>
                     <a class="dropdown-item" href="#"> Naruto</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#"> Autres</a>
+                    <a class="dropdown-item" href="#"> Autres</a> #}
                 </div>
             </li>
             <li class="nav-item">
