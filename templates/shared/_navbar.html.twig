@@ -14,9 +14,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Catégories</a>
                 <div class="dropdown-menu">
-                    {% for c in categoryRepository.findAll() %}
-                       <a class="dropdown-item" href="{{ path('figurine_category', {'slug': c.slug})}}"> {{c.categoryName}}</a> 
-                    {% endfor %}
+                    {{ render(controller('App\\Controller\\CategoryController::renderMenuList'))}}
                     
                     {# <a class="dropdown-item" href="#"> One Piece</a>
                     <a class="dropdown-item" href="#"> Naruto</a>
