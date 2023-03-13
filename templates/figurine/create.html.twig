@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Ajout de figurine
+{% endblock %}
+
+{% block body %}
+    <h1>Ajoutez une figurine :</h1>
+
+    {{ form_start(formView)}}
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                {{ form_row(formView.name) }}
+                {{ form_row(formView.price) }}
+                {{ form_row(formView.picture) }}
+            </div>
+            <div class="col">
+                {{ form_row(formView.shortDescription) }}
+                {{ form_row(formView.category) }}
+            </div>
+        </div>
+    </div>
+
+    {{ form_widget(formView)}}
+
+    <button type="submit" class="btn btn-info">
+        <i class="fas fa-save"></i>
+        Ajouter
+    </button>
+
+    {{ form_end(formView)}}
+
+{% endblock %}
