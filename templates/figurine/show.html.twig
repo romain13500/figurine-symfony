@@ -22,7 +22,7 @@
                 {{figurine.category.categoryName}}
             </span>
             <p>{{figurine.shortDescription}}</p>
-            <a href="#" class="btn btn-success"><i class="fas fa-shopping-cart"></i>
+            <a href="{{ path('cart_add', {'id': figurine.id} ) }}" class="btn btn-success"><i class="fas fa-shopping-cart"></i>
                 Ajouer au panier
             </a>
         </div>
