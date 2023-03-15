@@ -45,4 +45,27 @@ class CartController extends AbstractController
             'slug' => $figurine->getSlug()
         ]);
     }
+
+
+    #[Route('/cart', name: 'cart_show')]
+    public function show(SessionInterface $session, FigurinesRepository $figurinesRepository){
+
+        $total = 0;
+        $detailedCart = [];
+
+        foreach ($session->get('cart', []) as $id => $qty) {
+            $figurine = $figurinesRepository->find($id);
+
+            $detailedCart[] = [
+                'figurine' => $figurinesRepository->find($id),
+                'qty' => $qty
+            ];
+            $total += $figurine->getPrice() * $qty;
+        }
+
+        return $this->render('cart/show.html.twig', [
+            'items' => $detailedCart,
+            'total' => $total
+        ]);
+    }
 }
