@@ -15,6 +15,8 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
+
+
     #[Route(path: '/login', name: 'security_login', priority:1)]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -29,6 +31,9 @@ class SecurityController extends AbstractController
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
+
+
+
 
     #[Route(path: '/logout', name: 'security_logout', priority:1)]
     public function logout(bool $validateCsrfToken = true): ?Response
