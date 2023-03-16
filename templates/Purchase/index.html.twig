@@ -11,6 +11,7 @@
             <thead>
                 <th>Numero</th>
                 <th>Adresse</th>
+                <th>Figurines</th>
                 <th>Date de commande</th>
                 <th>total</th>
             </thead>
@@ -19,6 +20,11 @@
                     <tr>
                         <td>{{p.id}}</td>
                         <td>{{p.address}}</td>
+                        <td>
+                            {% for figurine in p.Figurines %}
+                                <li>{{figurine.name}}  ( {{figurine.price / 100}} € )</li>
+                            {% endfor %}
+                        </td>
                         <td>{{p.purchasedAt | date('d/m/Y H:i')}}</td> 
                         <td>{{p.total / 100}}</td>       
                     </tr> 

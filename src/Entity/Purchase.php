@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PurchaseRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PurchaseRepository::class)]
@@ -40,6 +42,14 @@ class Purchase
 
     #[ORM\Column]
     private ?\DateTimeImmutable $purchasedAt = null;
+
+    #[ORM\ManyToMany(targetEntity: figurines::class, inversedBy: 'purchases')]
+    private Collection $figurines;
+
+    public function __construct()
+    {
+        $this->figurines = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -138,6 +148,30 @@ class Purchase
     public function setPurchasedAt(\DateTimeImmutable $purchasedAt): self
     {
         $this->purchasedAt = $purchasedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, figurines>
+     */
+    public function getFigurines(): Collection
+    {
+        return $this->figurines;
+    }
+
+    public function addFigurine(figurines $figurine): self
+    {
+        if (!$this->figurines->contains($figurine)) {
+            $this->figurines->add($figurine);
+        }
+
+        return $this;
+    }
+
+    public function removeFigurine(figurines $figurine): self
+    {
+        $this->figurines->removeElement($figurine);
 
         return $this;
     }

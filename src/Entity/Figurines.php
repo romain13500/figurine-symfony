@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FigurinesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FigurinesRepository::class)]
@@ -30,6 +32,14 @@ class Figurines
 
     #[ORM\Column(length: 255)]
     private ?string $shortDescription = null;
+
+    #[ORM\ManyToMany(targetEntity: Purchase::class, mappedBy: 'figurines')]
+    private Collection $purchases;
+
+    public function __construct()
+    {
+        $this->purchases = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -104,6 +114,33 @@ class Figurines
     public function setShortDescription(string $shortDescription): self
     {
         $this->shortDescription = $shortDescription;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Purchase>
+     */
+    public function getPurchases(): Collection
+    {
+        return $this->purchases;
+    }
+
+    public function addPurchase(Purchase $purchase): self
+    {
+        if (!$this->purchases->contains($purchase)) {
+            $this->purchases->add($purchase);
+            $purchase->addFigurine($this);
+        }
+
+        return $this;
+    }
+
+    public function removePurchase(Purchase $purchase): self
+    {
+        if ($this->purchases->removeElement($purchase)) {
+            $purchase->removeFigurine($this);
+        }
 
         return $this;
     }
