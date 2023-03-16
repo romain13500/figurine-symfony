@@ -6,7 +6,7 @@ namespace App\Cart;
 
 use App\Repository\FigurinesRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 
 class CartService
 {
@@ -42,11 +42,17 @@ class CartService
 
         foreach ($this->requestStack->getSession()->get('cart', []) as $id => $qty) {
             $figurine = $this->figurinesRepository->find($id);
-            $total += $figurine->getPrice() * $qty;
+
+            if (!$figurine) {
+                continue;
+            }
+            $total += $figurine->getPrice() * $qty / 100;
         }
 
         return $total;
     }
+
+
 
     public function detailedCartItems(): array
     {
@@ -54,11 +60,12 @@ class CartService
 
         foreach ($this->requestStack->getSession()->get('cart', []) as $id => $qty) {
             $figurine = $this->figurinesRepository->find($id);
-            
-            $detailedCart[] = [
-                'figurine' => $figurine,
-                'qty' => $qty
-            ];
+
+            if (!$figurine) {
+                continue;
+            }
+
+            $detailedCart[] = new CartItem($figurine, $qty);
         }
 
         return $detailedCart;

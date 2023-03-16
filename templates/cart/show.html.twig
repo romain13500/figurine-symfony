@@ -22,14 +22,14 @@
                         <td>{{ item.figurine.name }}</td>
                         <td>{{ item.figurine.price / 100 }} €</td>
                         <td>{{ item.qty }}</td>
-                        <td>{{ item.qty * item.figurine.price / 100 }} €</td>
+                        <td>{{ item.total  }} €</td>
                     </tr>
                 {% endfor %}
             </tbody>
              <tfoot> 
                 <tr>
                     <td colspan="3"> Total : </td>
-                    <td>{{ total / 100 }} €</td>
+                    <td>{{ total  }} €</td>
                 </tr>
             </tfoot>      
         </table>
