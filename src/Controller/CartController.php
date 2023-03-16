@@ -85,12 +85,12 @@ class CartController extends AbstractController
         $figurine = $this->figurinesRepository->find($id);
 
         if (!$figurine) {
-            throw $this->createNotFoundException("Le Produit $id n'existe pas !");
+            throw $this->createNotFoundException("La figurine $id n'existe pas !");
         }
 
         $this->cartService->decrements($id);
 
-        $this->addFlash("success", "le produit a bien été supprimé !");
+        $this->addFlash("success", "La figurine a bien été supprimé !");
         return $this->redirectToRoute("cart_show");
     }
 }
