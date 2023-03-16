@@ -11,7 +11,7 @@
             <thead>
                 <th>Numero</th>
                 <th>Adresse</th>
-                {# <th>Date de commande</th> #}
+                <th>Date de commande</th>
                 <th>total</th>
             </thead>
             <tbody>
@@ -19,7 +19,7 @@
                     <tr>
                         <td>{{p.id}}</td>
                         <td>{{p.address}}</td>
-                        {# <td>{{p.date}}</td> #} 
+                        <td>{{p.purchasedAt | date('d/m/Y H:i')}}</td> 
                         <td>{{p.total / 100}}</td>       
                     </tr> 
                 {% endfor %}
