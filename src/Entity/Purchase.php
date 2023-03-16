@@ -43,12 +43,14 @@ class Purchase
     #[ORM\Column]
     private ?\DateTimeImmutable $purchasedAt = null;
 
-    #[ORM\ManyToMany(targetEntity: figurines::class, inversedBy: 'purchases')]
-    private Collection $figurines;
+    #[ORM\OneToMany(mappedBy: 'purchase', targetEntity: PurchaseItem::class, orphanRemoval: true)]
+    private Collection $purchaseItems;
+
+   
 
     public function __construct()
     {
-        $this->figurines = new ArrayCollection();
+        $this->purchaseItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -153,26 +155,34 @@ class Purchase
     }
 
     /**
-     * @return Collection<int, figurines>
+     * @return Collection<int, PurchaseItem>
      */
-    public function getFigurines(): Collection
+    public function getPurchaseItems(): Collection
     {
-        return $this->figurines;
+        return $this->purchaseItems;
     }
 
-    public function addFigurine(figurines $figurine): self
+    public function addPurchaseItem(PurchaseItem $purchaseItem): self
     {
-        if (!$this->figurines->contains($figurine)) {
-            $this->figurines->add($figurine);
+        if (!$this->purchaseItems->contains($purchaseItem)) {
+            $this->purchaseItems->add($purchaseItem);
+            $purchaseItem->setPurchase($this);
         }
 
         return $this;
     }
 
-    public function removeFigurine(figurines $figurine): self
+    public function removePurchaseItem(PurchaseItem $purchaseItem): self
     {
-        $this->figurines->removeElement($figurine);
+        if ($this->purchaseItems->removeElement($purchaseItem)) {
+            // set the owning side to null (unless already changed)
+            if ($purchaseItem->getPurchase() === $this) {
+                $purchaseItem->setPurchase(null);
+            }
+        }
 
         return $this;
     }
+
+   
 }
