@@ -19,6 +19,17 @@ class CartService
         $this->figurinesRepository = $figurinesRepository;
     }
 
+
+    protected function getCart()
+    {
+        return $this->requestStack->getSession()->get('cart', []);
+    }
+
+    protected function saveCart(array $cart)
+    {
+        return $this->requestStack->getSession()->set('cart', $cart);
+    }
+
                                     // **** SI LA FIGURINE EXISTE DANS LE PANIER ALORS ON INCREMENTE LA QUANTITE
                                     // ****SINON ON AJOUTE LA FIGURINE AU PANIER
 
@@ -33,6 +44,33 @@ class CartService
         }
 
         $this->requestStack->getSession()->set('cart', $cart);
+    }
+
+
+    public function remove(int $id) {
+        $cart = $this->getCart();
+        unset($cart[$id]);
+
+        $this->saveCart($cart);
+    }
+
+
+    public function decrements(int $id)
+    {
+        $cart = $this->getCart();
+
+        if (!array_key_exists($id, $cart)) {
+            return;
+        }
+
+        if ($cart[$id] === 1) {
+            $this->remove($id);
+            return;
+        }
+        $cart[$id]--;
+
+        $this->saveCart($cart);
+
     }
 
 

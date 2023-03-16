@@ -21,8 +21,13 @@
                     <tr>
                         <td>{{ item.figurine.name }}</td>
                         <td>{{ item.figurine.price / 100 }} €</td>
-                        <td>{{ item.qty }}</td>
+                        <td>
+                            <a href="{{ path("cart_decrements", {'id': item.figurine.id}) }}" class="btn btn-info btn-sm">-</a>
+                            {{ item.qty }}
+                            <a href="{{ path("cart_add", {'id': item.figurine.id}) }}" class="btn btn-info btn-sm">+</a>    
+                        </td>
                         <td>{{ item.total  }} €</td>
+                        <td><a href="{{ path('cart_delete', {'id': item.figurine.id}) }}" class="btn btn-danger">Supprimer</a></td>
                     </tr>
                 {% endfor %}
             </tbody>
