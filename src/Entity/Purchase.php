@@ -8,6 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: PurchaseRepository::class)]
 class Purchase
 {
+
+    public const STATUS_PENDING = 'PENDING';
+    public const STATUS_PAID = 'PAID';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -29,7 +33,7 @@ class Purchase
     private ?int $total = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $status = null;
+    private ?string $status = 'PENDING';
 
     #[ORM\ManyToOne(inversedBy: 'purchases')]
     private ?user $user = null;
