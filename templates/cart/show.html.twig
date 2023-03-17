@@ -39,6 +39,16 @@
                     </tr>
                 </tfoot>      
             </table>
+            <hr class="w-50 mx-auto mt-5 mb-4">
+            <h2>Confirmez votre commande en completant le formulaire</h2>
+            {{ form_start(confirmationForm) }}
+
+            {{ form_widget(confirmationForm)}}
+
+            <button type="submit" class="btn btn-success mt-3"> Confirmation de commande </button>
+
+            {{ form_end(confirmationForm)}}
+
         {% else %}
             <h2>Le panier est vide !</h2>
         {% endif %}
