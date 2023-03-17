@@ -41,7 +41,8 @@
             </table>
             <hr class="w-50 mx-auto mt-5 mb-4">
             <h2>Confirmez votre commande en completant le formulaire</h2>
-            {{ form_start(confirmationForm) }}
+
+            {{ form_start(confirmationForm, {'action': path('purchase_confirm')}) }}
 
             {{ form_widget(confirmationForm)}}
 

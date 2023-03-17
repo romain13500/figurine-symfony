@@ -37,7 +37,7 @@ class FigurineController extends AbstractController
 
 
     
-    #[Route('/{category_slug}/{slug}', name:'figurine_show')] 
+    #[Route('/{category_slug}/{slug}', name:'figurine_show', priority:-1)] 
     public function show($slug, FigurinesRepository $figurinesRepository)
     {
         $figurine = $figurinesRepository->findOneBy(['slug' => $slug]);
