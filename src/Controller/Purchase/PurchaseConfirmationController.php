@@ -3,68 +3,100 @@
 namespace App\Controller\Purchase;
 
 use App\Cart\CartService;
+use App\Entity\Purchase;
+use App\Entity\PurchaseItem;
 use App\Form\CartConfirmationType;
-use Symfony\Component\Form\FormFactoryInterface;
+use DateTimeImmutable;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-class PurchaseConfirmationController {
+class PurchaseConfirmationController extends AbstractController {
 
-    protected $formFactory;
-    protected $router;
-    protected $security;
+    
     protected $cartService;
+    protected $em;
     
-    public function __construct(FormFactoryInterface $formFactory, RouterInterface $router, Security $security, CartService $cartService)
-    {
-        $this->formFactory = $formFactory;
-        $this->router = $router;
-        $this->security = $security;
+    public function __construct(CartService $cartService, EntityManagerInterface $em)
+    {      
         $this->cartService = $cartService;
+        $this->em = $em;
     }
-    
 
-    
-    #[Route("/purchase/confirm", name:"purchase_confirm")]
-    public function confirm(Request $request, FlashBagInterface $flashBag)
+    #[Route('/purchase/confirm', name:'purchase_confirm')]
+    #[IsGranted("ROLE_USER", message:"Vous devez être connecté !")]
+    public function confirm(Request $request)
     {
-        dd('lol');
                                     // 1. lire les données du formulaire
 
-        $form = $this->formFactory->create(CartConfirmationType::class);
+        $form = $this->createForm(CartConfirmationType::class);
 
         $form->handleRequest($request);
 
                                     // 2. si le formulaire n'est pas soumis : sortir
 
         if (!$form->isSubmitted()) {
-            $flashBag->add('warning', 'Vous devez remplir le formulaire !');
-            return new RedirectResponse($this->router->generate('cart_show'));
+            $this->addFlash('warning', 'Vous devez remplir le formulaire !');
+            return $this->redirectToRoute('cart_show');
         }
                                     // 3. Si je ne suis pas connecté : sortir (security)
 
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
-        if (!$user) {
-            throw new AccessDeniedException('Vous devez être connecté(e)');
-            
-        }
                                     // 4. Si aucun produit : sortir (cartService)
 
-        $cartItems = $this->cartService->detailedCartItems();
+        $cartItem = $this->cartService->detailedCartItems();
 
-        if (count($cartItems) === 0) {
-                $flashBag->add('warning', 'Votre panier est vide');
-                return new RedirectResponse($this->router->generate('cart_show'));
+        if (count($cartItem) === 0) {
+                $this->addFlash('warning', 'Votre panier est vide');
+                return $this->redirectToRoute('cart_show');
         }
+        
+
                                     // 5. Creation purchase
+
+         /**
+         * @var Purchase
+         */
+        $purchase = $form->getData();
+
                                     // 6. Lien avec l'utilisateur connecté (security)
+
+        $purchase->setUser($user)
+                ->setPurchasedAt(new DateTimeImmutable())
+                ->setTotal($this->cartService->getTotal());
+
+        $this->em->persist($purchase);
+
                                     // 7. Lien avec produit dans le panier (cartService)
+
+        foreach ($this->cartService->detailedCartItems() as $cartItem) {
+            $purchaseItem = new PurchaseItem;
+            $purchaseItem->setPurchase($purchase)
+                        ->setFigurine($cartItem->figurine)
+                        ->setProductName($cartItem->figurine->getName())
+                        ->setProductPrice($cartItem->figurine->getPrice())
+                        ->setQuantity($cartItem->qty)
+                        ->setTotal($cartItem->getTotal());
+
+
+
+            $this->em->persist($purchaseItem);
+        }
+
+
                                     // 8. Enregistrer la commande (EntityManagerInterface)
+
+        $this->em->flush();
+
+        $this->cartService->empty();
+        $this->addFlash('success', 'Votre commande a bien été enregistrée !');
+        return $this->redirectToRoute('purchase_index');
+
     }
 }

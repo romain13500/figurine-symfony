@@ -15,6 +15,6 @@ class CartItem {
     }
 
     public function getTotal() : int {
-        return $this->figurine->getPrice() * $this->qty / 100;
+        return $this->figurine->getPrice() * $this->qty;
     }
 }

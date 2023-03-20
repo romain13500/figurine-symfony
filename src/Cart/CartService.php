@@ -84,7 +84,7 @@ class CartService
             if (!$figurine) {
                 continue;
             }
-            $total += $figurine->getPrice() * $qty / 100;
+            $total += $figurine->getPrice() * $qty /100;
         }
 
         return $total;
@@ -92,6 +92,9 @@ class CartService
 
 
 
+    /**
+     * @return CartItem[]
+     */
     public function detailedCartItems(): array
     {
         $detailedCart = [];
@@ -107,5 +110,11 @@ class CartService
         }
 
         return $detailedCart;
+    }
+
+
+    public function empty()
+    {
+        $this->saveCart([]);
     }
 }

@@ -18,7 +18,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class FigurineController extends AbstractController
 {
-    #[Route('/{slug}', name: 'figurine_category')]
+    #[Route('/{slug}', name: 'figurine_category', priority: -1)]
     public function category($slug, CategoryRepository $categoryRepository): Response
     {
         $category = $categoryRepository->findOneBy([
