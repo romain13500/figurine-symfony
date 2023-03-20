@@ -27,7 +27,7 @@ class PurchasesListController extends AbstractController {
         
     }
     
-    #[Route('/purchases', name:'purchase_index', priority: 1)]
+    #[Route('/purchases', name:'purchase_index')]
     public function index()
     {
                                 // **** ASSURER LA CONNEXION ****
