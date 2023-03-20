@@ -12,28 +12,28 @@ class CartConfirmationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('fullName', TextType::class, [
+            ->add('fullname', TextType::class, [
                 'label' => 'Nom complet',
                 'attr' => [
-                    'placeholder' => 'Nom complet pour la livraison'
+                    'placeholder' => "Entrez le nom du destinataire"
                 ]
             ])
             ->add('address', TextType::class, [
-                'label' => 'Adresse de livraison',
+                'label' => 'Adresse complète',
                 'attr' => [
-                    'placeholder' => 'Entrez une adresse de livraison'
+                    'placeholder' => "Entrez l'adresse de livraison'"
                 ]
             ])
             ->add('city', TextType::class, [
-                'label' => 'Ville',
+                'label' => 'Ville de livraison',
                 'attr' => [
-                    'placeholder' => 'Entrez la ville'
+                    'placeholder' => "Entrez la ville de livraison"
                 ]
             ])
             ->add('postalCode', TextType::class, [
-                'label' => 'Code postale',
+                'label' => 'Code postal',
                 'attr' => [
-                    'placeholder' => 'Entrez le code postal'
+                    'placeholder' => "Entrez le code postal"
                 ]
             ]);
     }

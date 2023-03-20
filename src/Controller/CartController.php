@@ -54,7 +54,7 @@ class CartController extends AbstractController
     #[Route('/cart', name: 'cart_show')]
     public function show(){
 
-        $form = $this->createForm(CartConfirmationType::class);
+       $form = $this->createForm(CartConfirmationType::class);
 
         $detailedCart = $this->cartService->detailedCartItems();
 
