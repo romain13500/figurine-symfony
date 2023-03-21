@@ -9,24 +9,24 @@
     <div class="container">
         <table class="table">
             <thead>
-                <th>N°_commande</th>
-                <th>Adresse</th>
-                <th>Figurines</th>
-                <th>Date de commande</th>
-                <th>total</th>
+                <th class="text-info"><h3>N°_commande</h3></th>
+                <th class="text-info"><h3>Adresse</h3></th>
+                <th class="text-info"><h3>Figurines</h3></th>
+                <th class="text-info"><h3>Date de commande</h3></th>
+                <th class="text-info"><h3>Total</h3></th>
             </thead>
             <tbody>
                 {% for p in purchases %}
                     <tr>
-                        <td>{{p.id}}</td>
-                        <td>{{p.address}}</td>
-                        <td>
+                        <td class="text-muted"><h4>{{p.id}}</h4></td>
+                        <td class="text-muted"><h4>{{p.address}}</h4></td>
+                        <td class="text-muted"><h4>
                             {% for item in p.purchaseItems %}
                                 <li>{{item.quantity}}X {{item.productName}} ({{item.total / 100}} € )</li>
-                            {% endfor %}
+                            {% endfor %}</h4>
                         </td>
-                        <td>{{p.purchasedAt | date('d/m/Y H:i')}}</td> 
-                        <td>{{p.total }}</td>       
+                        <td class="text-muted"><h4>{{p.purchasedAt | date('d/m/Y H:i')}}</h4></td> 
+                        <td class="text-muted"><h4>{{p.total }} €</h4></td>       
                     </tr> 
                 {% endfor %}
                    
