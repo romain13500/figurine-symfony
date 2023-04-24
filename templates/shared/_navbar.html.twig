@@ -30,11 +30,21 @@
         <ul class="navbar-nav">
             <li class="nav-item"><a href="{{ path('cart_show')}}" class="nav-link"><i class="fa-solid fa-shopping-cart"></i> Panier ({{cartService.total()}} €)</a></li>
             {% if app.user %}
-                <li class="nav-item"><a href="{{ path('purchase_index') }}" class="nav-link">Mes commandes</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Mon compte</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Mes Informations</a>
+                        <a class="dropdown-item" href="{{ path('purchase_index') }}">Mes commandes</a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Setting</a>
+                        {% endif %}
+                    </div>
+                </li>
                 <li class="nav-item"><a href="{{ path('security_logout')}}" class="btn btn-danger">Logout</a></li>
             {% else %}
                 <li class="nav-item"><a href="{{ path('app_register')}}" class="nav-link">Inscription</a></li>
-            <li class="nav-item"><a href="{{ path('security_login')}}" class="btn btn-success">Login</a></li>
+                <li class="nav-item"><a href="{{ path('security_login')}}" class="btn btn-success">Login</a></li>
             {% endif %}
         </ul>
     </div>
