@@ -11,19 +11,18 @@
     </li>
     <li class="breadcrumb-item active">{{category.categoryName}}</li>
     </ol>
-    <h1>
-        Catégorie : {{category.categoryName}}
+    
 
         <div class="container">
+            <h1> Catégorie : {{category.categoryName}} </h1>
             <div class="row">
                 {% for figurine in category.figurines %}
                 
                     {% include "figurine/_figurine_card.html.twig" %}
-    
+               
                 {% endfor %}
             </div>
+        
         </div>
 
-        
-    </h1>
 {% endblock %}

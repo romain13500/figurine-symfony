@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+    <h1 class="text-center mt-4">Administration ⚙️ </h1>
+
+    <div class="d-flex flex-wrap justify-content-around mt-5">
+        <div class="card" style="width: 18rem;">
+            <img src="https://static.vecteezy.com/system/resources/previews/000/439/863/original/vector-users-icon.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title text-center">Gestion des utilisateurs</h5>
+                <div class="mt-4 d-flex justify-content-around">
+                    <a href="{{ path('app_user') }}" class="btn btn-success"> Update </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="width: 18rem;">
+            <img src="https://dreamfeel.files.wordpress.com/2010/01/pastas.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title text-center">Gestion des categories</h5>
+                <div class="mt-4 d-flex justify-content-around">
+                    <a href="#" class="btn btn-primary">Add</a>
+                    <a href="#" class="btn btn-success"> Update </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="width: 18rem;">
+            <img src="https://www.lamarquezone.fr/images/Image/tintin-icones-fetiche-arumbaya-46406.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title text-center">Gestion des figurines</h5>
+                <div class="mt-4 d-flex justify-content-around">
+                    <a href="{{ path('figurine_create') }}" class="btn btn-primary">Add</a>
+                    <a href="#" class="btn btn-success"> Update </a>
+                </div>             
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
