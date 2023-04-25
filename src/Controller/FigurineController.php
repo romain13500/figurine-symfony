@@ -78,4 +78,14 @@ class FigurineController extends AbstractController
             'formView' => $formView
         ]); 
     }
+
+    #[Route('/{id}', name: 'figurines_delete', methods: ['POST'])]
+    public function delete(Request $request, Figurines $figurine, FigurinesRepository $figurinesRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$figurine->getId(), $request->request->get('_token'))) {
+            $figurinesRepository->remove($figurine, true);
+        }
+
+        return $this->redirectToRoute('app_admin', [], Response::HTTP_SEE_OTHER);
+    }
 }
