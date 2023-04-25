@@ -34,6 +34,14 @@ class FigurineController extends AbstractController
     }
 
 
+    #[Route('/admin/figurines', name: 'app_figurines', methods: ['GET'])]
+    public function index(FigurinesRepository $figurinesRepository): Response
+    {
+        return $this->render('figurine/index.html.twig', [
+            'figurines' => $figurinesRepository->findAll(),
+        ]);
+    }
+
     
     #[Route('/{category_slug}/{slug}', name:'figurine_show', priority:-1)] 
     public function show($slug, FigurinesRepository $figurinesRepository)
@@ -87,5 +95,24 @@ class FigurineController extends AbstractController
         }
 
         return $this->redirectToRoute('app_admin', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+    #[Route('/{id}/edit', name: 'figurines_edit', methods: ['GET', 'POST'],priority: 2)]
+    public function edit(Request $request, Figurines $figurine, FigurinesRepository $figurinesRepository): Response
+    {
+        $form = $this->createForm(FigurineType::class, $figurine);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $figurinesRepository->save($figurine, true);
+
+            return $this->redirectToRoute('app_figurines_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('figurine/edit.html.twig', [
+            'figurine' => $figurine,
+            'form' => $form,
+        ]);
     }
 }
