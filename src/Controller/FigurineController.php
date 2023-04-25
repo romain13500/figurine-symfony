@@ -74,7 +74,7 @@ class FigurineController extends AbstractController
             $em->persist($figurine);
             $em->flush();
 
-            return $this->redirectToRoute('figurine_show', [
+            return $this->redirectToRoute('app_admin', [
                 'category_slug' => $figurine->getCategory()->getSlug(),
                 'slug' => $figurine->getSlug()
             ]);
@@ -107,7 +107,7 @@ class FigurineController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $figurinesRepository->save($figurine, true);
 
-            return $this->redirectToRoute('app_figurines_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_figurines', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('figurine/edit.html.twig', [
