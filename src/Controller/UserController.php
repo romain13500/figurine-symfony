@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
-    #[Route('/user', name: 'app_user', methods: ['GET'])]
+    #[Route('/user', name: 'app_user', methods: ['GET'] )]
     public function index(UserRepository $userRepository): Response
     {
         return $this->render('users/index.html.twig', [
@@ -21,7 +21,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'user_show', methods: ['GET'])]
+    #[Route('/show/{id}', name: 'user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
         return $this->render('users/show.html.twig', [
