@@ -43,7 +43,7 @@ class FigurineController extends AbstractController
     }
 
     
-    #[Route('/{category_slug}/{slug}', name:'figurine_show', priority:-1)] 
+    #[Route('/{category_slug}/{slug}', name:'figurine_show')] 
     public function show($slug, FigurinesRepository $figurinesRepository)
     {
         $figurine = $figurinesRepository->findOneBy(['slug' => $slug]);
@@ -53,6 +53,14 @@ class FigurineController extends AbstractController
         }
 
         return $this->render('figurine/show.html.twig', [
+            'figurine' => $figurine,
+        ]);
+    }
+
+    #[Route('figurine/show/{id}', name: 'fig_show', methods: ['GET'])]
+    public function showFigurine(Figurines $figurine): Response
+    {
+        return $this->render('figurine/show.figurine.html.twig', [
             'figurine' => $figurine,
         ]);
     }
@@ -87,7 +95,7 @@ class FigurineController extends AbstractController
         ]); 
     }
 
-    #[Route('/{id}', name: 'figurines_delete', methods: ['POST'])]
+    #[Route('/admin/figurine/{id}/delete', name: 'figurines_delete', methods: ['POST'])]
     public function delete(Request $request, Figurines $figurine, FigurinesRepository $figurinesRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$figurine->getId(), $request->request->get('_token'))) {
@@ -98,7 +106,7 @@ class FigurineController extends AbstractController
     }
 
 
-    #[Route('/{id}/edit', name: 'figurines_edit', methods: ['GET', 'POST'],priority: 2)]
+    #[Route('/admin/figurine/{id}/edit', name: 'figurines_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Figurines $figurine, FigurinesRepository $figurinesRepository): Response
     {
         $form = $this->createForm(FigurineType::class, $figurine);

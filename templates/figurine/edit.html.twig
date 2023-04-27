@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Figurines{% endblock %}
+
+{% block body %}
+    <h1>Edit Figurines</h1>
+    <div class="container">
+        {{ include('figurine/_form.html.twig', {'button_label': 'Update'}) }}
+        {{ include('figurine/_delete_form.html.twig') }}
+        <a href="{{ path('app_figurines') }}">back to list</a>
+
+        
+    </div>
+    
+{% endblock %}

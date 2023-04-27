@@ -1,4 +1,16 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="d-flex flex-wrap justify-content-around">
+            <p>Role User 
+            <input type="checkbox">
+            </p>
+            <p>
+                Roles Admin
+                <input type="checkbox">
+            </p> 
+        </div>
+        
+    {% endif %} <br>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
