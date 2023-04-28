@@ -32,6 +32,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Purchase::class)]
     private Collection $purchases;
 
+    #[ORM\Column(length: 255)]
+    private ?string $username = null;
+
     public function __construct()
     {
         $this->purchases = new ArrayCollection();
@@ -145,6 +148,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
 
         return $this;
     }

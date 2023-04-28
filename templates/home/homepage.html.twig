@@ -4,7 +4,13 @@
 
 {% block body %}
     <div class="container">
-        <h1 class="my-4 text-center shadow p-2 text-info">Bienvenue dans le monde des Héros !!</h1>
+    {% if app.user %}
+    
+        <h1 class="my-4 text-center shadow p-2 text-info">Bienvenue dans le monde des Héros {{ app.user.username }}!!</h1>
+
+        {% else %}
+            <h1 class="my-4 text-center shadow p-2 text-info">Bienvenue dans le monde des Héros !!</h1>
+        {% endif %}
     </div>
     <div class="container">
         <h1>Nos produits phares :</h1>

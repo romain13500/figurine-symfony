@@ -12,6 +12,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
+            <form onsubmit=" voulez vous ajouter la fugurine ?">
                 {{ form_row(formView.name) }}
                 {{ form_row(formView.price) }}
                 {{ form_row(formView.picture) }}
@@ -25,11 +26,11 @@
 
     {{ form_widget(formView)}}
 
-    <button type="submit" class="btn btn-info">
-        <i class="fas fa-save"></i>
+    <button type="submit" class="btn btn-info" onclick="add()">
+        <i class="fas fa-save" on></i>
         Ajouter
     </button>
 
     {{ form_end(formView)}}
-
+</form>
 {% endblock %}
