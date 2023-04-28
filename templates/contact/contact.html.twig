@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ContactController!{% endblock %}
+{% block title %}Contact{% endblock %}
 
 {% block body %}
 
@@ -11,7 +11,10 @@
           {{ message }}
      </div>
 {% endfor %}
-    {{ form(form)}}
+<div class="border border-solid border-warning p-5 mt-4">
+     {{ form(form)}}
+</div>
+    
                 
 </div>
 {% endblock %}

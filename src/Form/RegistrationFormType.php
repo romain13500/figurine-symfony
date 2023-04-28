@@ -6,15 +6,16 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -22,19 +23,45 @@ class RegistrationFormType extends AbstractType
     {
         $builder
 
-            ->add('username', TextType::class)
-            ->add('email', EmailType::class)
-
-            
-
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'Veuillez accepter les conditions',
-                    ]),
+            ->add('username', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Entrez votre pseudo',
+                    'minlenght' => '3',
+                    'minMessage' => 'Votre pseudo doit contenir au moins 3 caractères !'
                 ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Entrez votre pseudo 😉 !'
+                    ]),
+                    new Length(['min' => 3,
+                    'minMessage' => 'Votre pseudo doit contenir au moins 3 caractères 😔 !', 
+                    'max' => 100,
+                    
+                    ])
+                ]
+
             ])
+            
+            ->add('email', EmailType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                    'minlenght' => '3',
+                    'maxlenght' => '255',
+                    'placeholder' => 'Entrez votre adresse email'
+                ],
+                'label' => 'Adresse email',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
+                ],
+                'constraints' => [
+                    new NotBlank(),
+                    new Email(),
+                    new Length(['min' => 3, 'max' => 255])
+                ]
+            
+            ])
+
 
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
@@ -50,6 +77,16 @@ class RegistrationFormType extends AbstractType
                         'minMessage' => 'Votre mot de passe doit contenir au moins 6 caractères',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
+                    ]),
+                ],
+            ])
+
+
+            ->add('agreeTerms', CheckboxType::class, [
+                'mapped' => false,
+                'constraints' => [
+                    new IsTrue([
+                        'message' => 'Veuillez accepter les conditions',
                     ]),
                 ],
             ])

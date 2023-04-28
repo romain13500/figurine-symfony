@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
     <div class="container">
@@ -22,19 +22,25 @@
         <hr class="mt-5 mx-auto w-50">
         <h2 class="mt-5">Des figurines de qualités</h2>
 
-                <div class='mb-4'>
+                <h2 class="text-center">Dragon Ball</h2>
+                <div class='mb-4 d-flex justify-content-around'> 
                     <a href="{{ path('figurine_category', {'slug': 'dragon-ball'}) }}"><img src="https://img.20mn.fr/cV3LuwV7TMuC3kydQMHbQA/1200x768_dragon-ball-super-nouvelle-serie-suite-directe-dragon-ball-z" class="w-75" alt="..."></a>
                 </div>
                 <hr>
-                <div class='mb-4'>
+                <h2 class="text-center">One Piece</h2>
+                <div class='mb-4 d-flex justify-content-around'>
+                    
                     <a href="{{ path('figurine_category', {'slug': 'one-piece'}) }}"><img src="https://shin-sekai.fr/img/cms/Banni%C3%A8res%20Cat%C3%A9gories/One%20Piece.jpg" alt=""></a>
                 </div>
                 <hr>
-                <div class='mb-4'>
+                    <h2 class="text-center">Naruto</h2>
+                <div class='mb-4 d-flex justify-content-around'>
                     <a href="{{ path('figurine_category', {'slug': 'naruto'}) }}"><img class='w-75'src="https://www.buzzwebzine.fr/wp-content/uploads/2021/12/personnage-plus-fort-naruto.jpg" alt=""></a>
                 </div>
                 <hr>
-                <div class='mb-4'>
+                <h2 class="text-center">Divers</h2>
+                <div class='mb-4 d-flex justify-content-around'>
+                    
                     <a href="{{ path('figurine_category', {'slug': 'other'}) }}"><img class='w-75'src="https://s2.dmcdn.net/v/8jqrr1Oj2AS6uFgpV/x1080" alt=""></a>
                 </div>
                 

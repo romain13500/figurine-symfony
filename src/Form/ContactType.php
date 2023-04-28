@@ -53,7 +53,9 @@ class ContactType extends AbstractType
                 ],
                 'constraints' => [
                     new NotBlank(),
-                    new Length(['min' => 3, 'max' => 50])
+                    new Length(['min' => 3,
+                        'minMessage' => 'Entrez le sujet de votre message !',
+                        'max' => 50])
                 ]
             ])
 
@@ -68,10 +70,13 @@ class ContactType extends AbstractType
                 'label' => 'Message',
                 'label_attr' => [
                     'class' => 'form-label mt-4',
-                    'onclick' => 'alert("Confirmer l\'envoi ?")'
                 ],
                 'constraints' => [
                     new NotBlank(),
+                    new Length([
+                        'min' => 5,
+                        'minMessage' => 'Entrez votre message !'
+                    ])
                 ]
             ])
 
