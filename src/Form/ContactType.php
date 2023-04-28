@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Contact;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
@@ -66,11 +67,11 @@ class ContactType extends AbstractType
                 ],
                 'label' => 'Message',
                 'label_attr' => [
-                    'class' => 'form-label mt-4'
+                    'class' => 'form-label mt-4',
+                    'onclick' => 'alert("Confirmer l\'envoi ?")'
                 ],
                 'constraints' => [
                     new NotBlank(),
-                    new Length(['min' => 3, 'max' => 255])
                 ]
             ])
 
