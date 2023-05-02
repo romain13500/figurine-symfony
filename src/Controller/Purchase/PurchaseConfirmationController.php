@@ -28,7 +28,7 @@ class PurchaseConfirmationController extends AbstractController {
         $this->persister = $persister;
     }
 
-    #[Route('/purchase/confirm', name:'purchase_confirm')]
+    #[Route('/purchase/confirm', name:'purchase_confirm', priority: 1)]
     #[IsGranted("ROLE_USER", message:"Vous devez être connecté !")]
     public function confirm(Request $request)
     {
