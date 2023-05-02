@@ -5,8 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     #[Route('/user', name: 'app_user', methods: ['GET'] )]
+    #[IsGranted('ROLE_ADMIN')]
     public function index(UserRepository $userRepository): Response
     {
         return $this->render('users/index.html.twig', [
@@ -40,7 +40,9 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $userRepository->save($user, true);
 
-            return $this->redirectToRoute('app_user', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'modification effectuée avec succès');
+            return $this->redirectToRoute('user_info',[], Response::HTTP_SEE_OTHER);
+            
         }
 
         return $this->renderForm('users/edit.html.twig', [
@@ -57,5 +59,15 @@ class UserController extends AbstractController
         }
 
         return $this->redirectToRoute('app_user', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/info', name:'user_info', methods:'GET')]
+    public function userInfo()
+    {
+        // dd('good');
+        return $this->render('users/user_info.html.twig', [
+            
+        ]);
+        
     }
 }
