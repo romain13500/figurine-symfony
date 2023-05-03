@@ -40,6 +40,5 @@ class PurchasePaymentController extends AbstractController {
         ]);
     }
 
-    public function paypal()
-    {}
+    
 }
