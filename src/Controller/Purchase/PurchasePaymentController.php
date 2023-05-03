@@ -32,10 +32,14 @@ class PurchasePaymentController extends AbstractController {
 
         $total = $this->cartService->getTotal();
 
+
         return $this->render('purchase/payment.html.twig', [
             'items' => $detailedCart,
             'total' => $total,
             'confirmationForm' => $form->createView()
         ]);
     }
+
+    public function paypal()
+    {}
 }
